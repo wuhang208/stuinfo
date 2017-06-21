@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩管理系统</title>
+    <link rel="stylesheet" type="text/css" href="./public/css/bootstrap.min.css">
+    <style type="text/css">
+    body {
+        height: 100%;
+        background-color: lightblue;
+    }
+
+    ul li {
+    	list-style: none;
+    }
+
+    .header {
+        margin-bottom: 50px;
+    }
+
+    .operation>div {
+        padding: 15px;
+    }
+
+    .operation.row .text-center button {
+    	outline-style: none;
+    }
+
+    .forms li {
+        display: none;
+    }
+
+    .forms li button {
+        margin-right: 30px;
+    }
+    </style>
+</head>
+
+<body>
+    <h1 class="header text-center">学生成绩管理系统</h1>
+    <div class="container">
+        <div class="operation row">
+            <div class="text-center col-md-3 col-sm-6">
+                <button>添加学生成绩</button>
+            </div>
+            <div class="text-center col-md-3 col-sm-6">
+                <button>查询学生成绩</button>
+            </div>
+            <div class="text-center col-md-3 col-sm-6">
+                <button>修改学生成绩</button>
+            </div>
+            <div class="text-center col-md-3 col-sm-6">
+                <button>删除学生成绩</button>
+            </div>
+        </div>
+        <ul class="forms">
+            <li class="show">
+                <form class="form-horizontal" method="get" action="/cgi-bin/sx/addse.cgi">
+                    <div class="form-group">
+                        <label for="stuId" class="col-sm-2 control-label">学生学号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="stuId" class="form-control" id="stuId" placeholder="请输入学生学号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cno" class="col-sm-2 control-label">课程号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cno" class="form-control" id="cno" placeholder="请输入课程号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="score" class="col-sm-2 control-label">学生成绩</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="score" class="form-control" id="score" placeholder="请输入学生成绩">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <button type="reset" class="btn btn-success">重置</button>
+                    </div>
+                </form>
+            </li>
+            <li>
+                <form class="form-horizontal" method="get" action="/cgi-bin/sx/selse.cgi">
+                    <div class="form-group">
+                        <label for="stuId-selse" class="col-sm-2 control-label">输入学号和课程号查询</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="stuId" class="form-control" id="stuId-selse" placeholder="输入学生学号">
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="cno-selse" class="col-sm-2 control-label">输入学号和课程号查询</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cno" class="form-control" id="cno-selse" placeholder="输入课程号">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <button type="reset" class="btn btn-success">重置</button>
+                    </div>
+                </form>
+            </li>
+            <li>
+                <form class="form-horizontal" method="get" action="/cgi-bin/sx/modse.cgi">
+                    <div class="form-group">
+                        <label for="stuId-modse" class="col-sm-2 control-label">学生学号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="stuId" class="form-control" id="stuId-modse" placeholder="请输入学生学号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cno-modse" class="col-sm-2 control-label">课程号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cno" class="form-control" id="cno-modse" placeholder="请输入课程号">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="score-modse" class="col-sm-2 control-label">学生成绩</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="score" class="form-control" id="score-modse" placeholder="请输入学生成绩">
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <button type="reset" class="btn btn-success">重置</button>
+                    </div>
+                </form>
+            </li>
+            <li>
+                <form class="form-horizontal" method="get" action="/cgi-bin/sx/delse.cgi">
+                    <div class="form-group">
+                        <label for="stuId-delse" class="col-sm-2 control-label">输入要删除的学生学号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="stuId" class="form-control" id="stuId-delse" placeholder="输入学号">
+                        </div>
+                      </div>
+                        <div class="form-group">
+                        <label for="cno-delse" class="col-sm-2 control-label">输入要删除的课程号</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="cno" class="form-control" id="cno-delse" placeholder="输入课程号">
+                        </div>
+                      </div>
+                        <div class="form-group">
+                            <label for="flag-delse" class="col-sm-2 control-label">输入0删除</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="flag" class="form-control" id="flag-delse" placeholder="输入0">
+                            </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success">提交</button>
+                        <button type="reset" class="btn btn-success">重置</button>
+                    </div>
+                </form>
+            </li>
+        </ul>
+    </div>
+    <script src="./public/js/jquery-3.0.0.min.js"></script>
+    <script src="./public/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+    	var btns = $(".operation button");
+    	var lis = $(".forms li");
+        btns.addClass("btn btn-primary btn-lg");
+
+        for (var i = 0; i < btns.length; i++){
+        	btns.eq(i).click(i, function(event){
+        		lis.eq(event.data).addClass("show").siblings().removeClass("show");
+        	});
+        }
+
+    });
+    </script>
+</body>
+
+</html>
