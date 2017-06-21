@@ -8,12 +8,17 @@ int cgiMain()
 {
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
-
+  char stuId[16] = "\0";
 	char cno[16] = "\0";
 	char flag[8] = "\0";
 	int status = 0;
 
-
+  status = cgiFormString("stuId",  stuId, 16);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get stuId error!\n");
+		return 1;
+	}
 	status = cgiFormString("cno",  cno, 16);
 	if (status != cgiFormSuccess)
 	{
@@ -49,7 +54,7 @@ int cgiMain()
 	}
 
 	if (flag[0]=='1'){
-	sprintf(sql, "delete from course where cno = %s", cno);
+	sprintf(sql, "delete from score where stuId = '%s' cno = %s", stuId, cno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -58,7 +63,7 @@ int cgiMain()
 	}
 }
 else{
-	sprintf(sql, "update course set fl ='0' where cno = %s", cno);
+	sprintf(sql, "update score set fl ='0' where stuId = '%s' cno = %s", stuId, cno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -68,7 +73,7 @@ else{
 
 }
 
-	fprintf(cgiOut, "delete course ok!\n");
+	fprintf(cgiOut, "delete score ok!\n");
 	mysql_close(db);
 
 	return 0;

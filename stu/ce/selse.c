@@ -18,9 +18,16 @@ int cgiMain()
 	fprintf(cgiOut, "<head><meta charset=\"utf-8\"><title>查询结果</title>\
 		    <link rel=\"stylesheet\" href=\"/stu/public/css/bootstrap.min.css\">\
 		</head>");
-
+  char stuId[16] = "\0";
 	char cno[16] = "\0";
 	int status = 0;
+
+  status = cgiFormString("stuId",  stuId, 16);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get stuId error!\n");
+		return 1;
+	}
 
 	status = cgiFormString("cno",  cno, 16);
 	if (status != cgiFormSuccess)
@@ -32,14 +39,8 @@ int cgiMain()
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
-	if (cno[0] == '*')
-	{
-		sprintf(sql, "select cno, cname, sdept from course where fl = '1'");
-	}
-	else
-	{
-		sprintf(sql, "select cno, cname, sdept from course where cno = '%s' and fl = '1'", cno);
-	}
+
+		sprintf(sql, "select stuId, cno, score from score where stuId= '%s' and cno = '%s' and fl = '1'", stuId, cno);
 
 
 	//初始	化
