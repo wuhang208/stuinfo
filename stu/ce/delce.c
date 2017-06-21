@@ -9,15 +9,15 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char sdept[32] = "\0";
+	char cno[16] = "\0";
 	char flag[8] = "\0";
 	int status = 0;
 
 
-	status = cgiFormString("sdept",  sdept, 32);
+	status = cgiFormString("cno",  cno, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get sdept error!\n");
+		fprintf(cgiOut, "get cno error!\n");
 		return 1;
 	}
 	status = cgiFormString("flag",  flag, 8);
@@ -47,8 +47,9 @@ int cgiMain()
 		mysql_close(db);
 		return -1;
 	}
-if (flag[0]=='1'){
-	sprintf(sql, "delete from school where sdept = '%s'", sdept);
+
+	if (flag[0]=='1'){
+	sprintf(sql, "delete from course where cno = %s", cno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
@@ -56,17 +57,18 @@ if (flag[0]=='1'){
 		return -1;
 	}
 }
-else {
-	sprintf(sql, "update school set fl = '0' where sdept = '%s'", sdept);
-		if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
-		{
-			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-			mysql_close(db);
-			return -1;
-		}
+else{
+	sprintf(sql, "updata course set flag ='1' where cno = %s", cno);
+	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
+	{
+		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
+		mysql_close(db);
+		return -1;
+	}
+
 }
 
-	fprintf(cgiOut, "delete college ok!\n");
+	fprintf(cgiOut, "delete course ok!\n");
 	mysql_close(db);
 
 	return 0;

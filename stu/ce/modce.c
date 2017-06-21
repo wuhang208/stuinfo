@@ -9,23 +9,31 @@ int cgiMain()
 
 	fprintf(cgiOut, "Content-type:text/html;charset=utf-8\n\n");
 
-	char sdept[32] = "\0";
-	char flag[8] = "\0";
+	char cno[16] = "\0";
+	char cname[32] = "\0";
+  char sdept[32] = "\0";
 	int status = 0;
 
+	status = cgiFormString("cno",  cno, 16);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get cno error!\n");
+		return 1;
+	}
 
-	status = cgiFormString("sdept",  sdept, 32);
+	status = cgiFormString("cname",  cname, 32);
+	if (status != cgiFormSuccess)
+	{
+		fprintf(cgiOut, "get cname error!\n");
+		return 1;
+	}
+  status = cgiFormString("sdept",  sdept, 32);
 	if (status != cgiFormSuccess)
 	{
 		fprintf(cgiOut, "get sdept error!\n");
 		return 1;
 	}
-	status = cgiFormString("flag",  flag, 8);
-	if (status != cgiFormSuccess)
-	{
-		fprintf(cgiOut, "get flag error!\n");
-		return 1;
-	}
+	//fprintf(cgiOut, "name = %s, age = %s, stuId = %s\n", name, age, stuId);
 
 	int ret;
 	char sql[128] = "\0";
@@ -33,6 +41,7 @@ int cgiMain()
 
 	//初始化
 	db = mysql_init(NULL);
+	mysql_options(db,MYSQL_SET_CHARSET_NAME,"utf8");
 	if (db == NULL)
 	{
 		fprintf(cgiOut,"mysql_init fail:%s\n", mysql_error(db));
@@ -47,27 +56,19 @@ int cgiMain()
 		mysql_close(db);
 		return -1;
 	}
-if (flag[0]=='1'){
-	sprintf(sql, "delete from school where sdept = '%s'", sdept);
+
+
+	sprintf(sql, "update course set cname='%s', sdept='%s'  where cno='%s' ", cname, sdept, cno);
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
 		mysql_close(db);
 		return -1;
 	}
-}
-else {
-	sprintf(sql, "update school set fl = '0' where sdept = '%s'", sdept);
-		if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
-		{
-			fprintf(cgiOut,"mysql_real_query fail:%s\n", mysql_error(db));
-			mysql_close(db);
-			return -1;
-		}
-}
 
-	fprintf(cgiOut, "delete college ok!\n");
+
+
+	fprintf(cgiOut, "update course ok!\n");
 	mysql_close(db);
-
 	return 0;
 }

@@ -52,7 +52,7 @@ int cgiMain()
 
 
 
-	strcpy(sql, "create table school (sdept char(32) not null primary key, major char(32) not null)character set = utf8;");
+	strcpy(sql, "create table school (sdept char(32) not null primary key, major char(32) not null, fl char(8))character set = utf8;");
 	if ((ret = mysql_real_query(db, sql, strlen(sql) + 1)) != 0)
 	{
 		if (ret != 1)
@@ -63,7 +63,7 @@ int cgiMain()
 		}
 	}
 
-	sprintf(sql, "insert into school values('%s', '%s')", sdept, major);
+	sprintf(sql, "insert into school values('%s', '%s', '1')", sdept, major);
 	if (mysql_real_query(db, sql, strlen(sql) + 1) != 0)
 	{
 		fprintf(cgiOut, "%s\n", mysql_error(db));

@@ -34,11 +34,11 @@ int cgiMain()
 	char sql[128] = "\0";
 	if (sdept[0] == '*')
 	{
-		sprintf(sql, "select * from school");
+		sprintf(sql, "select sdept, major from school where fl ='1'");
 	}
 	else
 	{
-		sprintf(sql, "select * from school where sdept = '%s'", sdept);
+		sprintf(sql, "select sdept, major from school where sdept = '%s' and fl ='1'", sdept);
 	}
 
 

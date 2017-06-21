@@ -19,30 +19,30 @@ int cgiMain()
 		    <link rel=\"stylesheet\" href=\"/stu/public/css/bootstrap.min.css\">\
 		</head>");
 
-	char stuId[16] = "\0";
+	char cno[16] = "\0";
 	int status = 0;
 
-	status = cgiFormString("stuId",  stuId, 16);
+	status = cgiFormString("cno",  cno, 16);
 	if (status != cgiFormSuccess)
 	{
-		fprintf(cgiOut, "get stuId error!\n");
+		fprintf(cgiOut, "get cno error!\n");
 		return 1;
 	}
 
 	int ret;
 	MYSQL *db;
 	char sql[128] = "\0";
-	if (stuId[0] == '*')
+	if (cno[0] == '*')
 	{
-		sprintf(sql, "select stuId, sname, age, sex, sdept from information where fl ='1'");
+		sprintf(sql, "select cno, cname, sdept from course where flag != '1'");
 	}
 	else
 	{
-		sprintf(sql, "select stuId, sname, age, sex, sdept from information where stuId = '%s' and fl ='1'", stuId);
+		sprintf(sql, "select cno, cname, sdept from course where cno = '%s' and flag != '1'", cno);
 	}
 
 
-	//初始化
+	//初始	化
 	db = mysql_init(NULL);
 	mysql_options(db,MYSQL_SET_CHARSET_NAME,"utf8");
 	if (db == NULL)
