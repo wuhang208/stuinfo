@@ -12,6 +12,21 @@ int cgiMain()
 	char cname[32] = "\0";
   char sdept[32] = "\0";
 	int status = 0;
+	
+	FILE * fd;
+	char ch;
+	fd=fopen("head.html", "r");
+	if(fd==NULL){
+		 fprintf(cgiOut, "Cannot open file,head.html \n");
+		 return -1;
+	 }
+	 ch = fgetc(fd);
+
+	 while(ch != EOF){
+		 fprintf(cgiOut, "%c", ch);
+		 ch = fgetc(fd);
+	 }
+	fclose(fd);
 
 	status = cgiFormString("cno",  cno, 16);
 	if (status != cgiFormSuccess)
